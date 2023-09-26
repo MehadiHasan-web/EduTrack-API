@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'number',
+        'role_id',
         'password',
     ];
 
@@ -42,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    final public function getUserByEmailOrPhone(array $input)
+    {
+        return self::query()->where('email', $input['email'])->orWhere('number',  $input['email'])->first();
+    }
 }
